@@ -21,14 +21,15 @@ except Exception as e:
     raise Exception(e)
 
 
-# Test 1 data cycle
-data = client.recv(1024).decode(FORMAT).strip("\n")
-print(data)
-x = input()
-msg = x + "\n"
-client.send(bytes(msg, "UTF-8"))
-data = client.recv(1024).decode(FORMAT).strip("\n")
-print(data)
+# Test data cycle
+while True:
+    data = client.recv(1024).decode(FORMAT).strip("\n")
+    print(data)
+    x = input()
+    if x not in ["1", "2", "3"]:
+        break
+    msg = x + "\n"
+    client.send(bytes(msg, "UTF-8"))
 
 
 # close the connection
