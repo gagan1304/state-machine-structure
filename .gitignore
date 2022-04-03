@@ -1,5 +1,6 @@
 
 # custom files
+local_vars.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
