@@ -1,4 +1,8 @@
+from logging import raiseExceptions
 import socket
+
+# Constants
+FORMAT = "utf-8"
 
 # server details
 PORT = 65432
@@ -8,17 +12,26 @@ ADDR = (SERVER, PORT)
 
 # connect to server
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connected = False
+
 try:
     client.connect(ADDR)
-    connected = True
     print("Connected to server..")
 except Exception as e:
-    print(f"Error!: {str(e)}")
+    print(f"Error! See exception below")
+    raise Exception(e)
+
+
+# Test 1 data cycle
+data = client.recv(1024).decode(FORMAT).strip("\n")
+print(data)
+x = input()
+msg = x + "\n"
+client.send(bytes(msg, "UTF-8"))
+data = client.recv(1024).decode(FORMAT).strip("\n")
+print(data)
 
 
 # close the connection
-if connected:
-    client.close()
-    print("Disconnected.")
+client.close()
+print("Disconnected.")
 
